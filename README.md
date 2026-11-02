@@ -18,12 +18,15 @@ The project uses Astro as a static site generator for the administrative interfa
 
 - Node.js 22.23.4 or newer
 - npm 10 or newer
+- SQLite command-line interface (sqlite3), required to run database migration tests
 - Wrangler authentication is only required for deployment or access to remote Cloudflare resources
+
+The SQLite CLI must be available in the system PATH. It is used by the migration tests to create temporary databases and execute SQL scripts. It is not required to run the application.
 
 ## Local installation
 
 ```sh
-npm install
+npm ci
 npm run dev
 ```
 

@@ -5,11 +5,8 @@ import { tmpdir } from "node:os";
 
 import { afterEach, describe, expect, it } from "vitest";
 
-const migrationsDir =
-  "/home/runner/work/core-ticket-system/core-ticket-system/migrations";
-
 const migrationSql = (file: string): string =>
-  readFileSync(join(migrationsDir, file), "utf8");
+  readFileSync(new URL(`../../migrations/${file}`, import.meta.url), "utf8");
 
 const applySql = (databasePath: string, sql: string): void => {
   execFileSync("sqlite3", [databasePath], {
