@@ -64,6 +64,8 @@ Apply migrations to a configured production database only after replacing the pl
 npx wrangler d1 migrations apply DB --remote
 ```
 
+Authentication flows that persist user records must normalize email addresses before writes (trim + lowercase) so stored values remain canonical and match the database's case-insensitive uniqueness guarantees.
+
 Never commit production identifiers, credentials, or secrets. Create the R2 bucket separately and replace the placeholder `bucket_name` before deployment.
 
 ## Cloudflare configuration
