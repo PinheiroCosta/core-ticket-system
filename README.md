@@ -16,7 +16,7 @@ The project uses Astro as a static site generator for the administrative interfa
 
 ## Prerequisites
 
-- Node.js 20 or newer
+- Node.js 22.23.4 or newer
 - npm 10 or newer
 - Wrangler authentication is only required for deployment or access to remote Cloudflare resources
 
