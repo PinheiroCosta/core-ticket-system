@@ -66,7 +66,7 @@ describe("database migrations", () => {
         VALUES ('user-2', 'Duplicate User', 'ADMIN@EXAMPLE.COM', 'hash', 'customer', 1, '2026-01-02T00:00:00.000Z', '2026-01-02T00:00:00.000Z');
         `,
       );
-    }).toThrowError(/UNIQUE constraint failed: users\.email/i);
+    }).toThrow(/UNIQUE constraint failed: users\.email/i);
   });
 
   it("preserves attachment/message ticket consistency after migration", () => {
@@ -114,7 +114,7 @@ describe("database migrations", () => {
         VALUES ('attachment-2', 'ticket-2', 'message-1', 'user-2', 'obj-2', 'mismatch.txt', 'text/plain', 64);
         `,
       );
-    }).toThrowError(/FOREIGN KEY constraint failed/i);
+    }).toThrow(/FOREIGN KEY constraint failed/i);
 
     applySql(
       databasePath,
