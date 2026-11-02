@@ -27,23 +27,27 @@ The application runs on Cloudflare Pages with Pages Functions.
 ### Components
 
 **Frontend**
+
 - Astro.
 - Static generation.
 - TypeScript for browser interactions.
 - Communicates with the backend through REST.
 
 **Backend**
+
 - Cloudflare Pages Functions.
 - TypeScript.
 - REST API under `/api/v1`.
 - Business logic separated from HTTP handlers.
 
 **Database**
+
 - Cloudflare D1.
 - SQLite relational model.
 - Schema migrations.
 
 **Object Storage**
+
 - Cloudflare R2.
 - Private storage for ticket attachments.
 
@@ -64,6 +68,7 @@ The backend should be organized around the following responsibilities:
 ### Authentication
 
 Responsible for:
+
 - Login.
 - Logout.
 - Password verification.
@@ -75,6 +80,7 @@ Responsible for:
 ### Authorization
 
 Responsible for:
+
 - Role verification.
 - Resource ownership validation.
 - Administrative permissions.
@@ -83,6 +89,7 @@ Responsible for:
 ### Users
 
 Responsible for:
+
 - User registration by administrators.
 - Customer account management.
 - Administrator account management.
@@ -91,6 +98,7 @@ Responsible for:
 ### Tickets
 
 Responsible for:
+
 - Ticket creation.
 - Ticket listing.
 - Ticket details.
@@ -101,6 +109,7 @@ Responsible for:
 ### Messages
 
 Responsible for:
+
 - Customer messages.
 - Administrator responses.
 - Message history.
@@ -109,6 +118,7 @@ Responsible for:
 ### Attachments
 
 Responsible for:
+
 - Upload validation.
 - R2 storage.
 - Attachment metadata.
@@ -121,9 +131,9 @@ The system uses email and password authentication.
 
 Two roles are initially supported:
 
-| Role | Description |
-|---|---|
-| admin | Full administrative access. |
+| Role     | Description                           |
+| -------- | ------------------------------------- |
+| admin    | Full administrative access.           |
 | customer | Access restricted to owned resources. |
 
 Administrator accounts must be provisioned through a secure installation procedure.
@@ -145,6 +155,7 @@ Passwords must never be stored or logged in plaintext.
 Sessions are persisted in D1.
 
 A session consists of:
+
 - Random session identifier.
 - Associated user.
 - Creation timestamp.
@@ -156,6 +167,7 @@ Only a cryptographic hash of the session identifier should be stored in D1.
 The browser receives the original identifier through a secure cookie.
 
 Session cookies must use:
+
 - HttpOnly.
 - Secure in production.
 - SameSite protection.
@@ -171,6 +183,7 @@ Authorization is enforced by the backend.
 ### Administrator
 
 An administrator can:
+
 - View all tickets.
 - View all customers.
 - Create customer accounts.
@@ -182,6 +195,7 @@ An administrator can:
 ### Customer
 
 A customer can:
+
 - Create tickets.
 - View their own tickets.
 - View messages belonging to their tickets.
@@ -201,75 +215,75 @@ Initial tables:
 
 ### users
 
-| Column | Type | Description |
-|---|---|---|
-| id | TEXT | Primary key |
-| name | TEXT | User name |
-| email | TEXT | Unique email |
-| password_hash | TEXT | Password hash |
-| role | TEXT | admin or customer |
-| is_active | INTEGER | Account status |
-| created_at | TEXT | Creation timestamp |
-| updated_at | TEXT | Last update |
+| Column        | Type    | Description        |
+| ------------- | ------- | ------------------ |
+| id            | TEXT    | Primary key        |
+| name          | TEXT    | User name          |
+| email         | TEXT    | Unique email       |
+| password_hash | TEXT    | Password hash      |
+| role          | TEXT    | admin or customer  |
+| is_active     | INTEGER | Account status     |
+| created_at    | TEXT    | Creation timestamp |
+| updated_at    | TEXT    | Last update        |
 
 ### tickets
 
-| Column | Type | Description |
-|---|---|---|
-| id | TEXT | Primary key |
-| customer_id | TEXT | Owner |
-| category_id | TEXT | Optional category |
-| subject | TEXT | Ticket subject |
-| description | TEXT | Initial description |
-| status | TEXT | Current status |
-| priority | TEXT | Ticket priority |
-| metadata | TEXT | Optional validated JSON |
-| created_at | TEXT | Creation timestamp |
-| updated_at | TEXT | Last update |
+| Column      | Type | Description             |
+| ----------- | ---- | ----------------------- |
+| id          | TEXT | Primary key             |
+| customer_id | TEXT | Owner                   |
+| category_id | TEXT | Optional category       |
+| subject     | TEXT | Ticket subject          |
+| description | TEXT | Initial description     |
+| status      | TEXT | Current status          |
+| priority    | TEXT | Ticket priority         |
+| metadata    | TEXT | Optional validated JSON |
+| created_at  | TEXT | Creation timestamp      |
+| updated_at  | TEXT | Last update             |
 
 ### ticket_messages
 
-| Column | Type | Description |
-|---|---|---|
-| id | TEXT | Primary key |
-| ticket_id | TEXT | Associated ticket |
-| author_id | TEXT | Message author |
-| message | TEXT | Message content |
+| Column     | Type | Description        |
+| ---------- | ---- | ------------------ |
+| id         | TEXT | Primary key        |
+| ticket_id  | TEXT | Associated ticket  |
+| author_id  | TEXT | Message author     |
+| message    | TEXT | Message content    |
 | created_at | TEXT | Creation timestamp |
 
 ### ticket_attachments
 
-| Column | Type | Description |
-|---|---|---|
-| id | TEXT | Primary key |
-| ticket_id | TEXT | Associated ticket |
-| message_id | TEXT | Optional associated message |
-| uploaded_by | TEXT | Uploading user |
-| object_key | TEXT | R2 object identifier |
-| original_name | TEXT | Original filename |
-| mime_type | TEXT | Validated MIME type |
-| size_bytes | INTEGER | File size |
-| created_at | TEXT | Upload timestamp |
+| Column        | Type    | Description                 |
+| ------------- | ------- | --------------------------- |
+| id            | TEXT    | Primary key                 |
+| ticket_id     | TEXT    | Associated ticket           |
+| message_id    | TEXT    | Optional associated message |
+| uploaded_by   | TEXT    | Uploading user              |
+| object_key    | TEXT    | R2 object identifier        |
+| original_name | TEXT    | Original filename           |
+| mime_type     | TEXT    | Validated MIME type         |
+| size_bytes    | INTEGER | File size                   |
+| created_at    | TEXT    | Upload timestamp            |
 
 ### ticket_categories
 
-| Column | Type | Description |
-|---|---|---|
-| id | TEXT | Primary key |
-| name | TEXT | Category name |
-| description | TEXT | Optional description |
-| is_active | INTEGER | Category status |
-| created_at | TEXT | Creation timestamp |
+| Column      | Type    | Description          |
+| ----------- | ------- | -------------------- |
+| id          | TEXT    | Primary key          |
+| name        | TEXT    | Category name        |
+| description | TEXT    | Optional description |
+| is_active   | INTEGER | Category status      |
+| created_at  | TEXT    | Creation timestamp   |
 
 ### sessions
 
-| Column | Type | Description |
-|---|---|---|
-| id | TEXT | Primary key |
-| user_id | TEXT | Associated user |
-| token_hash | TEXT | Hashed session identifier |
-| expires_at | TEXT | Expiration timestamp |
-| created_at | TEXT | Creation timestamp |
+| Column     | Type | Description                   |
+| ---------- | ---- | ----------------------------- |
+| id         | TEXT | Primary key                   |
+| user_id    | TEXT | Associated user               |
+| token_hash | TEXT | Hashed session identifier     |
+| expires_at | TEXT | Expiration timestamp          |
+| created_at | TEXT | Creation timestamp            |
 | revoked_at | TEXT | Optional revocation timestamp |
 
 ### Database Rules
@@ -295,6 +309,7 @@ R2 objects must remain private.
 Downloads must be performed through authenticated API endpoints that verify ticket ownership or administrative permissions.
 
 The application must validate:
+
 - File size.
 - Allowed file types.
 - MIME type.
@@ -337,6 +352,7 @@ Initial endpoint groups:
 Administrative endpoints for customer management must be added under an appropriate users resource.
 
 Every endpoint must define:
+
 - Authentication requirements.
 - Authorization requirements.
 - Input validation.
@@ -350,6 +366,7 @@ Use consistent HTTP status codes.
 The API should return structured JSON errors.
 
 Never expose:
+
 - SQL errors.
 - Internal stack traces.
 - Password hashes.

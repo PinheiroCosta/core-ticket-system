@@ -1,0 +1,31 @@
+---
+import PageHeading from "../components/PageHeading.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <section class="panel hero">
+    <PageHeading
+      eyebrow="Administration"
+      title="A clear foundation for support operations."
+      description="Core Ticket System is a self-hosted ticket management engine designed for independent installations."
+    />
+    <a class="button" href="/dashboard">Open dashboard</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: clamp(2rem, 8vw, 5rem);
+  }
+
+  .button {
+    display: inline-block;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: #fff;
+    background: #2456c4;
+    font-weight: 700;
+    text-decoration: none;
+  }
+</style>
