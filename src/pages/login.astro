@@ -1,0 +1,47 @@
+---
+import PageHeading from "../components/PageHeading.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Sign in | Core Ticket System">
+  <section class="panel">
+    <PageHeading
+      eyebrow="Account access"
+      title="Sign in"
+      description="Authentication will be added in a subsequent feature phase."
+    />
+    <form>
+      <label>
+        Email
+        <input type="email" name="email" autocomplete="email" disabled />
+      </label>
+      <label>
+        Password
+        <input type="password" name="password" autocomplete="current-password" disabled />
+      </label>
+      <button type="button" disabled>Sign in</button>
+    </form>
+  </section>
+</BaseLayout>
+
+<style>
+  form {
+    display: grid;
+    max-width: 28rem;
+    gap: 1rem;
+  }
+
+  label {
+    display: grid;
+    gap: 0.4rem;
+    font-weight: 600;
+  }
+
+  input,
+  button {
+    padding: 0.7rem;
+    border: 1px solid #cbd4e2;
+    border-radius: 0.4rem;
+    font: inherit;
+  }
+</style>
