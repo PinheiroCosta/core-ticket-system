@@ -5,7 +5,8 @@ import { tmpdir } from "node:os";
 
 import { afterEach, describe, expect, it } from "vitest";
 
-const migrationsDir = "/home/runner/work/core-ticket-system/core-ticket-system/migrations";
+const migrationsDir =
+  "/home/runner/work/core-ticket-system/core-ticket-system/migrations";
 
 const migrationSql = (file: string): string =>
   readFileSync(join(migrationsDir, file), "utf8");
@@ -55,7 +56,10 @@ describe("database migrations", () => {
 
     applySql(databasePath, migrationSql("0002_schema_improvements.sql"));
 
-    const emails = queryRows(databasePath, "SELECT email FROM users WHERE id = 'user-1';");
+    const emails = queryRows(
+      databasePath,
+      "SELECT email FROM users WHERE id = 'user-1';",
+    );
     expect(emails).toEqual(["admin@example.com"]);
 
     expect(() => {
@@ -70,7 +74,9 @@ describe("database migrations", () => {
   });
 
   it("preserves attachment/message ticket consistency after migration", () => {
-    const tempDirectory = mkdtempSync(join(tmpdir(), "cts-migration-attachment-"));
+    const tempDirectory = mkdtempSync(
+      join(tmpdir(), "cts-migration-attachment-"),
+    );
     tempDirectories.push(tempDirectory);
 
     const databasePath = join(tempDirectory, "db.sqlite");
